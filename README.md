@@ -30,7 +30,7 @@ The goal was to create a word-level predictive text system that suggests the nex
 
 ## Dataset
 
-The dataset used in this project is *The Adventures of Tom Sawyer* by Mark Twain, sourced from Project Gutenberg. Key characteristics include:
+The dataset used in this project is *David Copperfield* by Charles Dickens (Project Gutenberg eBook #766), sourced from Project Gutenberg. Key characteristics include:
 - **Size:** 1,954,026 characters; 367,022 words
 - **Unique Words:** 18,450
 - **Preprocessing:** Text cleaning steps included lowercasing, punctuation removal, and word embedding for dimensionality reduction.
