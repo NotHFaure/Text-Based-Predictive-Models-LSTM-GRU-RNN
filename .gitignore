@@ -1,0 +1,25 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Keras / model checkpoints and serialized artefacts
+*.h5
+*.keras
+*.pickle
+*.pkl
+
+# Logs
+*.log
