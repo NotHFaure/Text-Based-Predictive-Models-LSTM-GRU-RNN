@@ -3,7 +3,6 @@
 **Predictive Text Module Development**  
 **Module 3A: Word-Level Predictive Text Module**  
 **Author:** Harrison Faure  
-**Student ID:** z5364422  
 **Date:** November 4, 2024
 
 ---
