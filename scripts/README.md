@@ -69,9 +69,7 @@ rather than a real HTML parser.
 The practical effect: chapter boundaries and chapter counts match the
 committed output exactly, but the cleaned text within each chapter is not
 byte-identical — contractions and any digit sequences in the source text
-remain unexpanded. The exact comparison from this script's validation run
-is recorded in `Execution/Reports/ER-2026-07-31-003-corpus-script.md`
-(Code HQ), not duplicated here.
+remain unexpanded.
 
 ### A note on the corpus source itself
 
