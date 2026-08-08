@@ -98,6 +98,10 @@ No `requirements.txt` or environment file is committed. Install the libraries li
 4. The RNN section uses `torch`, `torch.nn`, `TensorDataset` and `DataLoader` without its own import statement in the committed notebook — add these imports manually before running that section standalone.
 5. Tokenizer/vocabulary artefacts (previously `tokenizer.pickle`, `tok.pickle`, `tok_model_4.pickle`, `word_to_index.pickle`, `index_to_word.pickle`) were removed for security reasons — see [Known Limitations](#known-limitations) for regeneration instructions.
 
+## Corpus Reproducibility Script
+
+`scripts/prepare_corpus.py` is a standard-library-only script that downloads and hash-verifies Project Gutenberg eBook #766, then reproduces the chapter-splitting step of the preprocessing pipeline above into a location you choose. It does not replace `pg766.txt`, `cleaned_chapters/` or `cleaned_data/cleaned_text.txt`, all of which remain committed — see [`scripts/README.md`](scripts/README.md) for how to run it, what it reproduces exactly, and where its output is known to differ from the committed chapters.
+
 ## Requirements and Dependencies
 
 Inferred from the notebooks' `import` statements (no version pins are committed):
