@@ -102,6 +102,16 @@ No `requirements.txt` or environment file is committed. Install the libraries li
 
 `scripts/prepare_corpus.py` is a standard-library-only script that downloads and hash-verifies Project Gutenberg eBook #766, then reproduces the chapter-splitting step of the preprocessing pipeline above into a location you choose. It does not replace `pg766.txt`, `cleaned_chapters/` or `cleaned_data/cleaned_text.txt`, all of which remain committed — see [`scripts/README.md`](scripts/README.md) for how to run it, what it reproduces exactly, and where its output is known to differ from the committed chapters.
 
+## Trained Model
+
+`best_model.keras` (the Model 5 LSTM checkpoint referenced throughout this README) is no longer committed to this repository. At 9.4 MB it is a binary weights artefact, not source, and it has moved to this machine's dataset store rather than the repository tip.
+
+- **SHA-256:** `109093c6efb12426c1ac459268d3e215272cc7b6da2568044afadb9684ec5c52`
+- **Where it lives now:** a configurable data root, conventionally `<DATA_ROOT>/text-predictive-models/models/best_model.keras` — never a hardcoded `E:\` path. Set `DATA_ROOT` (or edit the notebook cell that loads it) to point at wherever you keep it locally.
+- **Removed from git history?** No. The blob remains reachable in this repository's history prior to this change; only the tip no longer carries it. No history rewrite was performed or is planned.
+- **Consequence for the notebooks:** the GRU/LSTM FPS-measurement cells and any other cell calling `load_model('best_model.keras')` will not find the file in a fresh clone. This was already true in practice — the five tokenizer pickles removed under the 2026-07-29 security pass (see Known Limitations) mean a fresh clone could not run inference end-to-end regardless. Removing the model file does not break anything that a clean clone could previously run.
+- **Rollback:** `git checkout <commit-before-this-change> -- best_model.keras` restores the file from history.
+
 ## Requirements and Dependencies
 
 Inferred from the notebooks' `import` statements (no version pins are committed):
@@ -118,7 +128,6 @@ Inferred from the notebooks' `import` statements (no version pins are committed)
 ├── cleaned_chapters/        # 64 per-chapter cleaned text files, generated from pg766.txt
 ├── cleaned_data/            # Concatenated cleaned corpus
 ├── pg766.txt                # Raw corpus: Project Gutenberg eBook #766, "David Copperfield"
-├── best_model.keras         # Saved Keras model (LSTM, Model 5 — see Known Limitations on provenance)
 ├── MLASS4.ipynb             # Early draft: data exploration, n-gram experiments
 ├── MLASS4v2.ipynb           # Final notebook: RNN, GRU and LSTM (Models 1-5) training and comparison
 ├── Training_Output_LSTM.txt # Captured training log for one LSTM run
@@ -152,7 +161,7 @@ MIT — see [`LICENSE`](LICENSE). The licence covers the author's own code (note
 - **Coursework scope:** originally an assessed university assignment (ZEIT4151, UNSW Canberra), not a production system.
 - **GRU and RNN did not converge** to a useful validation accuracy in the 20 epochs trained (see [Results](#results)); this is an accurate report of what the notebook shows, not a bug in this documentation.
 - **FPS figures are not a fair cross-architecture comparison** — see [Results](#results) for why.
-- **`best_model.keras` provenance:** the file is committed, and the FPS-measurement cells load it by that filename, but no cell in either committed notebook contains the `model.save(...)` call that produced it. It is presumed to be the Model 5 LSTM checkpoint based on how it is loaded and used, but this cannot be independently confirmed from the notebooks alone.
+- **`best_model.keras` provenance:** no cell in either committed notebook contains the `model.save(...)` call that produced it. It is presumed to be the Model 5 LSTM checkpoint based on how it was loaded and used before its removal from the repository tip, but this cannot be independently confirmed from the notebooks alone. See [Trained Model](#trained-model) for its current location and checksum.
 - **Previously shipped pickle artefacts (remediated 2026-07-29):** this repository formerly committed five `.pickle` files (`tokenizer.pickle`, `tok.pickle`, `tok_model_4.pickle`, `word_to_index.pickle`, `index_to_word.pickle`). Pickle deserialisation executes arbitrary code by design, and this is a public repository, so all five were removed rather than kept or blindly converted. To regenerate safe equivalents: re-run the Model 5 tokenizer-fitting cell in `MLASS4v2.ipynb` against the already-committed `cleaned_chapters/` text (this does not require retraining the neural network itself), then export with Keras's `tokenizer.to_json()` for `tokenizer.json`, and dump `tokenizer.word_index` as `vocab.json`. This was not done as part of this documentation pass, to avoid deserialising the removed pickles or fabricating their contents.
 - **No committed `requirements.txt` or environment file** — dependencies must be reconstructed from the notebooks' `import` cells.
 - **Assignment brief removed:** the original UNSW Canberra assignment brief PDF has been removed from this repository (2026-07-29) — it is the institution's material, not the author's to publish, independent of any privacy concern.
