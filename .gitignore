@@ -26,3 +26,10 @@ Thumbs.db
 
 # scripts/prepare_corpus.py download cache and default output
 .corpus_cache/
+
+# Corpus, regenerated locally via scripts/prepare_corpus.py -- no longer
+# committed as of A-33. If you point --cache/--output at these paths per
+# the README's Usage instructions, keep them out of git.
+/pg766.txt
+/cleaned_chapters/
+/cleaned_data/
